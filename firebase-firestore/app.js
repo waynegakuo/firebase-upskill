@@ -1,21 +1,42 @@
 const cafeList = document.querySelector('#cafe-list');
-let output = '';
+
+// let output = '';
 
 const form = document.querySelector('#add-cafe-form');
+
+//  Create elements and render cafe
+const renderCafe = doc => {
+    let li = document.createElement('li');
+    let name = document.createElement('span')
+    let city = document.createElement('span')
+    let cross = document.createElement('div')
+
+    li.setAttribute('data-id', doc.id);
+    name.textContent = doc.data().name;
+    city.textContent = doc.data().city;
+    cross.textContent = 'x'
+
+    li.appendChild(name);
+    li.appendChild(city);
+    li.appendChild(cross);
+
+    cafeList.appendChild(li);
+
+    // Deleting data
+    cross.addEventListener('click', (e) => {
+        e.stopPropagation();
+        let id = e.target.parentElement.getAttribute('data-id');
+        db.collection('cafes').doc(id).delete();
+    })
+}
 
 // Getting all documents in collection cafes
 db.collection('cafes').get()
     .then((snapshot) => {
         // console.log(snapshot.docs)
         snapshot.docs.forEach(doc => {
-            // renderCafe(doc)
-            output += `
-                <li data-id="${doc.id}">
-                    <span>${doc.data().name}</span>
-                    <span>${doc.data().city}</span>
-                </li>`
+            renderCafe(doc)
         })
-        cafeList.innerHTML = output
     });
 
 // Saving data
@@ -31,18 +52,18 @@ form.addEventListener('submit', (e) => {
 
 
 
-/** 1. Using DOM manipulation to append info from Firebase
+/** 1. Using DOM manipulation to append info from Firebase ~ this way proves to be stronger then using template literals
  * //  Create elements and render cafe
     function renderCafe(doc) {
         let li = document.createElement('li');
         let name = document.createElement('span')
         let city = document.createElement('span')
-        let cross = document.createElement('div)
+        let cross = document.createElement('div')
 
         li.setAttribute('data-id', doc.id);
         name.textContent = doc.data().name;
         city.textContent = doc.data().city;
-        cross.textContent = 'x
+        cross.textContent = 'x'
 
         li.appendChild(name);
         li.appendChild(city);
@@ -72,5 +93,26 @@ form.addEventListener('submit', (e) => {
 const renderCafe = doc => {
     const li = cafeTemplate(doc)
     cafeList.insertAdjacentHTML("beforeend", li)
+}
+ */
+
+/**
+ * const renderCafe = doc => {
+    output += `
+    <li data-id="${doc.id}">
+        <span>${doc.data().name}</span>
+        <span>${doc.data().city}</span>
+        <div id="delete">x</div>
+    </li>`
+
+    cafeList.innerHTML = output
+
+    // Deleting data when 'x' is clicked
+    let cross = document.querySelector('div'); // Getting the DOM properties for the div with the 'x' symbol ~ proving problematic when clicking --> probably has to do with using innerHTML instead of appendChild
+    cross.addEventListener('click', (e) => {
+        e.stopPropagation();
+        let id = e.target.parentElement.getAttribute('data-id'); // getting the cross(e.target), move to the parent element (which is the li) then get the unique ID inside 'data-id' of the element li
+        db.collection('cafes').doc(id).delete();
+    })
 }
  */
