@@ -30,8 +30,13 @@ const renderCafe = doc => {
     })
 }
 
-// Getting all documents in collection cafes
-db.collection('cafes').get()
+/**
+ * Getting all documents in collection cafes ~ you can also tag the queries to the order by just appending it before orderBy
+ * Throws an error at first if you add where and orderBy so you just click on the link provided on the console to 
+ * enable indexing on Firestore ~ resolved it by opening incognito mode since multiple accounts signed in
+ * Nested queries is possible
+ */
+db.collection('cafes').where('city', '==', 'Nairobi').orderBy('name').get()
     .then((snapshot) => {
         // console.log(snapshot.docs)
         snapshot.docs.forEach(doc => {
@@ -39,8 +44,9 @@ db.collection('cafes').get()
         })
     });
 
-// Getting data based on a certain query ~ queries are case sensitive where('city', '>', 'M'), where('city', '==', 'M')
 /**
+ * Getting data based on a certain query ~ queries are case sensitive where('city', '>', 'M'), where('city', '==', 'M')
+ * 
  * db.collection('cafes').where('city', '==', 'Nairobi').get()
     .then((snapshot) => {
         // console.log(snapshot.docs)
@@ -100,11 +106,11 @@ form.addEventListener('submit', (e) => {
             <span>${doc.data().city}</span>
         </li>`
 
-// create element & render cafe
-const renderCafe = doc => {
-    const li = cafeTemplate(doc)
-    cafeList.insertAdjacentHTML("beforeend", li)
-}
+    // create element & render cafe
+    const renderCafe = doc => {
+        const li = cafeTemplate(doc)
+        cafeList.insertAdjacentHTML("beforeend", li)
+    }
  */
 
 /**
