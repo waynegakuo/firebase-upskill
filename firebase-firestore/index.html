@@ -4,7 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+
+    <!-- We are interested in the firestore service from Firebase so we add this  -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-analytics.js"></script>
+
     <link rel="stylesheet" href="style.css">
+
     <title>Firebase Firestore</title>
 </head>
 
@@ -18,6 +30,8 @@
         <ul id="cafe-list"></ul>
 
     </div>
+    <script src="config.js"></script>
+    <script src="firebase-settings.js"></script>
     <script src="app.js"></script>
 </body>
 

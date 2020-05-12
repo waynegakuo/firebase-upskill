@@ -1,8 +1,9 @@
 @import 'https://fonts.googleapis.com/css?family=Poppins';
-
+* {
+    font-family: Poppins, sans-serif;
+}
 body{
     background: #eab0dc;
-    font-family: Poppins, sans-serif;
 }
 
 h1{
@@ -98,7 +99,6 @@ button{
     width: 14%;
     box-shadow: -1px 0px 1px rgba(0,0,0,0.1);
     font-weight: bold;
-    font-family: ubuntu;
     letter-spacing: 1px;
     color: #999;
 }
