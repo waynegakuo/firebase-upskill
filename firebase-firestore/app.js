@@ -39,6 +39,15 @@ db.collection('cafes').get()
         })
     });
 
+// Getting data based on a certain query ~ queries are case sensitive where('city', '>', 'M'), where('city', '==', 'M')
+// db.collection('cafes').where('city', '==', 'Nairobi').get()
+//     .then((snapshot) => {
+//         // console.log(snapshot.docs)
+//         snapshot.docs.forEach(doc => {
+//             renderCafe(doc)
+//         })
+//     });
+
 // Saving data
 form.addEventListener('submit', (e) => {
     e.preventDefault();
