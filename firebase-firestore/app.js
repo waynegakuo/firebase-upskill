@@ -34,15 +34,18 @@ const renderCafe = doc => {
  * Getting all documents in collection cafes ~ you can also tag the queries to the order by just appending it before orderBy
  * Throws an error at first if you add where and orderBy so you just click on the link provided on the console to 
  * enable indexing on Firestore ~ resolved it by opening incognito mode since multiple accounts signed in
- * Nested queries is possible
+ * Nested queries is possible ~ Notusing since it's not a real time listener
  */
-db.collection('cafes').where('city', '==', 'Nairobi').orderBy('name').get()
+
+/**
+ * db.collection('cafes').where('city', '==', 'Nairobi').orderBy('name').get()
     .then((snapshot) => {
         // console.log(snapshot.docs)
         snapshot.docs.forEach(doc => {
             renderCafe(doc)
         })
     });
+ */
 
 /**
  * Getting data based on a certain query ~ queries are case sensitive where('city', '>', 'M'), where('city', '==', 'M')
@@ -67,6 +70,22 @@ form.addEventListener('submit', (e) => {
     form.city.value = ''
 })
 
+// Realtime Listener 
+db.collection('cafes').orderBy('city').onSnapshot(snapshot => {
+    let changes = snapshot.docChanges();
+    // console.log(changes) ~ will show you type whether added or removed
+    changes.forEach(change => {
+        // console.log(change.doc.data())
+        if (change.type == 'added') {
+            renderCafe(change.doc);
+        }
+        else if (change.type == 'removed') {
+            // Grab li tag on the page where the data-id attribute equals to that id of the doc that was changed
+            let li = cafeList.querySelector("[data-id='" + change.doc.id + "']")
+            cafeList.removeChild(li)
+        }
+    })
+})
 
 
 /** 1. Using DOM manipulation to append info from Firebase ~ this way proves to be stronger then using template literals
