@@ -47,6 +47,10 @@ li span{
     display: block;
 }
 
+li span:nth-child(1){
+    cursor: pointer;
+}
+
 li span:nth-child(2){
     font-size: 16px;
     margin-top: 6px;

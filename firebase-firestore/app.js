@@ -28,6 +28,20 @@ const renderCafe = doc => {
         let id = e.target.parentElement.getAttribute('data-id');
         db.collection('cafes').doc(id).delete();
     })
+
+    // Populating data to input when user clicks on name
+    name.addEventListener('click', (e) => {
+        e.stopPropagation();
+        let id = e.target.parentElement.getAttribute('data-id');
+        db.collection('cafes').doc(id).get().then((snapshot) => {
+            // console.log(snapshot.data().name)
+            form.id.value = snapshot.id // set the hidden id input with the id of the clicked document
+            form.name.value = snapshot.data().name
+            form.city.value = snapshot.data().city
+        })
+
+
+    })
 }
 
 /**
@@ -62,10 +76,20 @@ const renderCafe = doc => {
 // Saving data
 form.addEventListener('submit', (e) => {
     e.preventDefault();
-    db.collection('cafes').add({
-        name: form.name.value,
-        city: form.city.value
-    });
+    if (form.id.value == '') {
+        db.collection('cafes').add({
+            name: form.name.value,
+            city: form.city.value
+        });
+    }
+    else {
+        // Update
+        let id = form.id.value
+        db.collection('cafes').doc(id).update({
+            name: form.name.value,
+            city: form.city.value
+        })
+    }
     form.name.value = ''
     form.city.value = ''
 })
@@ -73,7 +97,7 @@ form.addEventListener('submit', (e) => {
 // Realtime Listener 
 db.collection('cafes').orderBy('city').onSnapshot(snapshot => {
     let changes = snapshot.docChanges();
-    // console.log(changes) ~ will show you type whether added or removed
+    // console.log(changes)
     changes.forEach(change => {
         // console.log(change.doc.data())
         if (change.type == 'added') {
@@ -82,7 +106,12 @@ db.collection('cafes').orderBy('city').onSnapshot(snapshot => {
         else if (change.type == 'removed') {
             // Grab li tag on the page where the data-id attribute equals to that id of the doc that was changed
             let li = cafeList.querySelector("[data-id='" + change.doc.id + "']")
-            cafeList.removeChild(li)
+            cafeList.removeChild(li);
+        }
+        else if (change.type == 'modified') {
+            let li = cafeList.querySelector("[data-id='" + change.doc.id + "']")
+            cafeList.removeChild(li);
+            renderCafe(change.doc)
         }
     })
 })
@@ -152,3 +181,21 @@ db.collection('cafes').orderBy('city').onSnapshot(snapshot => {
     })
 }
  */
+
+
+// Update function
+const update = () => {
+    db.collection('cafes').doc('3eO4uGI1QfGadGtvhjEz').update({
+        // name: 'Warrior World'
+        city: 'Kericho'
+    })
+}
+
+// Set ~ ovewrites the previous document
+const setDoc = () => {
+    db.collection('cafes').doc('3eO4uGI1QfGadGtvhjEz').set({
+        // name: 'Warrior World'
+        city: 'Kericho'
+
+    })
+}
