@@ -23,3 +23,22 @@ logout.addEventListener('click', (e) => {
         console.log('The user has signed out')
     })
 })
+
+// Log in user
+const loginForm = document.querySelector('#login-form');
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Get user info from login form
+    const email = loginForm['login-email'].value;
+    const password = loginForm['login-password'].value;
+
+    // Log in the user via Firebase
+    auth.signInWithEmailAndPassword(email, password).then(cred => {
+        console.log(cred.user)
+        // Close login modal and reset the form
+        const modal = document.querySelector('#modal-login')
+        M.Modal.getInstance(modal).close()
+        loginForm.reset();
+    })
+})
