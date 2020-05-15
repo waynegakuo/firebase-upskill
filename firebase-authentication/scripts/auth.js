@@ -1,3 +1,14 @@
+// Listen for auth status changes
+auth.onAuthStateChanged(user => {
+    // console.log(user)
+    if (user) { // fires is user is logged in
+        console.log('User logged in: ', user);
+    }
+    else {
+        console.log('User logged out');
+    }
+});
+
 // Sign up user
 const signupForm = document.querySelector('#signup-form')
 signupForm.addEventListener('submit', (e) => {
@@ -19,9 +30,14 @@ signupForm.addEventListener('submit', (e) => {
 const logout = document.querySelector('#logout')
 logout.addEventListener('click', (e) => {
     e.preventDefault();
-    auth.signOut().then(() => {
+    auth.signOut();
+
+    /**
+     * We don't need this since we can now track the status using onAuthStateChanged
+     * auth.signOut().then(() => {
         console.log('The user has signed out')
     })
+     */
 })
 
 // Log in user
@@ -35,7 +51,7 @@ loginForm.addEventListener('submit', (e) => {
 
     // Log in the user via Firebase
     auth.signInWithEmailAndPassword(email, password).then(cred => {
-        console.log(cred.user)
+        // console.log(cred.user)
         // Close login modal and reset the form
         const modal = document.querySelector('#modal-login')
         M.Modal.getInstance(modal).close()
