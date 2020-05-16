@@ -1,3 +1,32 @@
+/**
+ * This file is used for manipulating the DOM
+ */
+
+const guideList = document.querySelector('.guides');
+
+/**
+ * Set up guides 
+ * will take in data from auth.js method of getting data from the firestore collection 
+ * and cycle through and output a guide for each element inside that data array
+ */
+const setupGuides = (data) => {
+
+    let html = '';
+    data.forEach(doc => {
+        const guide = doc.data();
+        const li = `
+        <li>
+            <div class="collapsible-header grey lighten-4">${guide.title}</div>
+            <div class="collapsible-body white">${guide.content}</div>
+        </li>
+        `;
+
+        html += li;
+    });
+
+    guideList.innerHTML = html;
+}
+
 // setup materialize components
 document.addEventListener('DOMContentLoaded', function () {
 
