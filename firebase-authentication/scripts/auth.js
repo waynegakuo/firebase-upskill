@@ -1,3 +1,7 @@
+/**
+ * This file is for anything Firebase related
+ */
+
 // Listen for auth status changes
 auth.onAuthStateChanged(user => {
     if (user) { // fires is user is logged in
@@ -14,6 +18,25 @@ auth.onAuthStateChanged(user => {
         console.log('User logged out');
     }
 });
+
+// Create new guide from input
+const createForm = document.querySelector('#create-form');
+
+createForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    db.collection('guides').add({
+        title: createForm['title'].value,
+        content: createForm['content'].value
+    }).then(() => {
+        // Close the modal and reset form
+        const modal = document.querySelector('#modal-create')
+        M.Modal.getInstance(modal).close()
+        createForm.reset();
+    }).catch(err => {
+        console.log(err.message)
+    })
+})
 
 // Sign up user
 const signupForm = document.querySelector('#signup-form')
