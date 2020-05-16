@@ -4,6 +4,24 @@
 
 const guideList = document.querySelector('.guides');
 
+// Getting access to DOM elements for showing/hiding based on authentication
+const loggedOutLinks = document.querySelectorAll('.logged-out');
+const loggedInLinks = document.querySelectorAll('.logged-in')
+
+// Checks if the user exists/logged in ~gets called in the auth.js
+const setupUI = (user) => {
+    if (user) {
+        // Toggle UI elements
+        loggedInLinks.forEach(item => item.style.display = 'block');
+        loggedOutLinks.forEach(item => item.style.display = 'none');
+    }
+    else {
+        // Toggle UI elements
+        loggedInLinks.forEach(item => item.style.display = 'none');
+        loggedOutLinks.forEach(item => item.style.display = 'block');
+    }
+}
+
 /**
  * Set up guides 
  * will take in data from auth.js method of getting data from the firestore collection 

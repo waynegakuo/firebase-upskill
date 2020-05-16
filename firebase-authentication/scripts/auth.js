@@ -4,10 +4,12 @@ auth.onAuthStateChanged(user => {
         // Get data from Firestore
         db.collection('guides').get().then(snapshot => {
             setupGuides(snapshot.docs) // this method is in the index.js file
+            setupUI(user)
         })
         console.log('User logged in: ', user);
     }
     else {
+        setupUI()
         setupGuides([])
         console.log('User logged out');
     }
