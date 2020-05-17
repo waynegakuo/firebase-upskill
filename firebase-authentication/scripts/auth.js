@@ -26,12 +26,15 @@ adminForm.addEventListener('submit', (e) => {
 let unsubscribe = () => { };
 auth.onAuthStateChanged(user => {
     if (user) { // fires is user is logged in
-
+        user.getIdTokenResult().then(idTokenResult => {
+            // console.log(idTokenResult.claims);
+            user.admin = idTokenResult.claims.admin; // attaching the admin property to the user temporarily ~ solves issue of log out -log in
+            setupUI(user)
+        })
         // Get data from Firestore using Realtime listener
         unsubscribe = db.collection('guides').onSnapshot(snapshot => {
             setupGuides(snapshot.docs) // this method is in the index.js file
         })
-        setupUI(user)
         console.log('User logged in')
     }
     else {

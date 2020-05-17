@@ -21,3 +21,11 @@
  * We deploy the functions only using firebase deploy --only functions ~ we check the functions tab in our 
  * Firebase project and see our first cloud function deployed.
  */
+
+ /**
+  * Lesson #20
+  * Getting the custom claim set in the frontend to condition views
+  * While checking if the logged in user has a tokenclaim using getIdTokenResult(), at first it's false/undefined
+  * One needs to logout first and log back in for it to change to true
+  * We attach the admin property to the user temporarily ~ solves issue of log out-log in
+  */

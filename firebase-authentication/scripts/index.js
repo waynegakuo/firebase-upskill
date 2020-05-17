@@ -11,14 +11,22 @@ const loggedInLinks = document.querySelectorAll('.logged-in');
 // Reference to the account pop-up
 const accountDetails = document.querySelector('.account-details')
 
-// Checks if the user exists/logged in ~gets called in the auth.js
+// Reference to admin section
+const adminItems = document.querySelectorAll('.admin');
+
+// Checks if the user exists/logged in, and also checks if the user logged in is an admin ~ gets called in the auth.js
 const setupUI = (user) => {
     if (user) {
+        if (user.admin) {
+            // Display admin items if the user logged in has the admin property (if is an admin)
+            adminItems.forEach(item => item.style.display = 'block')
+        }
         // Show account info & use the user's unique id to query the firestore for a specific document in a specific collection
         db.collection('users').doc(user.uid).get().then(doc => {
             const html = `
             <div>Logged in as ${user.email}</div>
             <div>${doc.data().bio}</div>
+            <div class="pink-text">${user.admin ? 'Admin': ''}</div>
         `;
             accountDetails.innerHTML = html;
         })
@@ -27,6 +35,8 @@ const setupUI = (user) => {
         loggedOutLinks.forEach(item => item.style.display = 'none');
     }
     else {
+        // Hide admin items
+        adminItems.forEach(item => item.style.display = 'none')
         // Hide account info
         accountDetails.innerHTML = '';
         // Toggle UI elements
