@@ -5,8 +5,8 @@
 // Listen for auth status changes
 auth.onAuthStateChanged(user => {
     if (user) { // fires is user is logged in
-        // Get data from Firestore
-        db.collection('guides').get().then(snapshot => {
+        // Get data from Firestore using Realtime listener
+        db.collection('guides').onSnapshot(snapshot => {
             setupGuides(snapshot.docs) // this method is in the index.js file
             setupUI(user)
         })
