@@ -108,3 +108,10 @@ loginForm.addEventListener('submit', (e) => {
         loginForm.reset();
     })
 })
+
+/**
+ * 17th May 2020: We edited the Firestore rules to allow creation of the users collection when the user has been
+ * authenticated
+ * We allowed the reading of the user document info only if the currently logged in user's ID matches the document
+ * unique ID ~ meaning, one cannot view information that does not belong to them. One reads only their documents
+ */
