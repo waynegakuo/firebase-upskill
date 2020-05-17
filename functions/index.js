@@ -13,6 +13,11 @@ admin.initializeApp(); // initialize this app server-side
  * admin: true
  */
 exports.addAdminRole = functions.https.onCall((data, context) => {
+    // Check request is made by an admin
+    if (context.auth.token.admin !== true) {
+        return { error: 'Only admins can add other admins' }
+    }
+    
     // Get user & add custom claim (admin): when we call the function, we will send an email property together with the data & access it here
     // We are returning this bcz it's gonna return a promise & overall inside that promise at some point we want to 
     // return a value & that value is gonna be returned to the user
