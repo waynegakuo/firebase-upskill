@@ -17,3 +17,4 @@ firebase.analytics();
 // Make auth and firestore references
 const auth = firebase.auth();
 const db = firebase.firestore();
+const functions = firebase.functions();
