@@ -14,11 +14,14 @@ const accountDetails = document.querySelector('.account-details')
 // Checks if the user exists/logged in ~gets called in the auth.js
 const setupUI = (user) => {
     if (user) {
-        // Show account info
-        const html = `
+        // Show account info & use the user's unique id to query the firestore for a specific document in a specific collection
+        db.collection('users').doc(user.uid).get().then(doc => {
+            const html = `
             <div>Logged in as ${user.email}</div>
+            <div>${doc.data().bio}</div>
         `;
-        accountDetails.innerHTML = html;
+            accountDetails.innerHTML = html;
+        })
         // Toggle UI elements
         loggedInLinks.forEach(item => item.style.display = 'block');
         loggedOutLinks.forEach(item => item.style.display = 'none');
