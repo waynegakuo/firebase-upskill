@@ -6,16 +6,26 @@ const guideList = document.querySelector('.guides');
 
 // Getting access to DOM elements for showing/hiding based on authentication
 const loggedOutLinks = document.querySelectorAll('.logged-out');
-const loggedInLinks = document.querySelectorAll('.logged-in')
+const loggedInLinks = document.querySelectorAll('.logged-in');
+
+// Reference to the account pop-up
+const accountDetails = document.querySelector('.account-details')
 
 // Checks if the user exists/logged in ~gets called in the auth.js
 const setupUI = (user) => {
     if (user) {
+        // Show account info
+        const html = `
+            <div>Logged in as ${user.email}</div>
+        `;
+        accountDetails.innerHTML = html;
         // Toggle UI elements
         loggedInLinks.forEach(item => item.style.display = 'block');
         loggedOutLinks.forEach(item => item.style.display = 'none');
     }
     else {
+        // Hide account info
+        accountDetails.innerHTML = '';
         // Toggle UI elements
         loggedInLinks.forEach(item => item.style.display = 'none');
         loggedOutLinks.forEach(item => item.style.display = 'block');

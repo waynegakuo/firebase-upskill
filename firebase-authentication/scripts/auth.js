@@ -2,19 +2,27 @@
  * This file is for anything Firebase related
  */
 
-// Listen for auth status changes
+/**
+ * Listen for auth status changes
+ * When you call the onSnapshot method, it returns an object 
+ * that you can use to unsubscribe from the listener and prevent the error.
+ * param @user
+ */
+let unsubscribe = () => { };
 auth.onAuthStateChanged(user => {
     if (user) { // fires is user is logged in
+
         // Get data from Firestore using Realtime listener
-        db.collection('guides').onSnapshot(snapshot => {
+        unsubscribe = db.collection('guides').onSnapshot(snapshot => {
             setupGuides(snapshot.docs) // this method is in the index.js file
-            setupUI(user)
         })
-        console.log('User logged in: ', user);
+        setupUI(user)
+        console.log('User logged in')
     }
     else {
         setupUI()
         setupGuides([])
+        unsubscribe();
         console.log('User logged out');
     }
 });
