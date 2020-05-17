@@ -47,3 +47,11 @@
         }
  * then we run "firebase deploy --only functions" which will update cloud functions we previously had
  */
+
+ /**
+  * Lesson #23 ~ 17th May 2020 (Link: https://youtu.be/D8bBmnDQ7ZA)
+  * Catching Auth Errors ~ we would like to show our users where they have gone wrong with regards to providing
+  * information on authentication
+  * We put in some HTML in the signup and login modals that will be holders of the errors when they happen
+  * We then add some lines of code in the sign up and login method of well displaying errors that arise from such
+  */
