@@ -23,9 +23,16 @@
  */
 
  /**
-  * Lesson #20
+  * Lesson #20 (Link: https://youtu.be/paNuap1mw3A)
   * Getting the custom claim set in the frontend to condition views
   * While checking if the logged in user has a tokenclaim using getIdTokenResult(), at first it's false/undefined
   * One needs to logout first and log back in for it to change to true
   * We attach the admin property to the user temporarily ~ solves issue of log out-log in
   */
+
+  /**
+   * Lesson #21 ~ 17th May 2020
+   * Setting Firestore Rules with Claims
+   * We set the rules that logged in users can only read the guides documents
+   * whereas admins can write them ONLY
+   */
