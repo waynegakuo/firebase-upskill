@@ -13,7 +13,7 @@ admin.initializeApp(); // initialize this app server-side
  * admin: true
  */
 exports.addAdminRole = functions.https.onCall((data, context) => {
-    // Check request is made by an admin
+    // Check request is made by an admin ~ commented out if you want to have the first person put as admin then deploy again
     if (context.auth.token.admin !== true) {
         return { error: 'Only admins can add other admins' }
     }
